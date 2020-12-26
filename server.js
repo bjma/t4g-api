@@ -15,7 +15,7 @@ app.use(cors()); // some op shit
 const port = process.env.PORT || 3000;
 
 // Establish connection to database
-const uri = fs.readFileSync(__dirname + '/uri.txt', 'utf-8', (err) => { console.log(err); });
+const uri = process.env.MONGODB_URI;
 mongoose.connect(uri, {useUnifiedTopology: true, useNewUrlParser: true});
 const connection = mongoose.connection;
 
