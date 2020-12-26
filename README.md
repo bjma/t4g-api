@@ -9,5 +9,5 @@ Below, you can find the specific endpoints that we've used so far.
 ### Web Component Image Classifier (Project 1)
 Currently running on localhost.
 ```
-http://localhost:<port>/api/proj1
+http://localhost:<port>/api/proj1/imageData
 ```
