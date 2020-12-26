@@ -7,7 +7,9 @@ Pretty simple RESTful API made for Tech4Good's deep learning team. Does the basi
 Below, you can find the specific endpoints that we've used so far.
 
 ### Web Component Image Classifier (Project 1)
-Currently running on localhost.
+This endpoint gets you the entire dataset of web component images, with features and byte data.
 ```
-http://localhost:<port>/api/proj1/imageData
+https://t4g-dl-api.herokuapp.com/api/proj1/dataset
 ```
+
+You can also make `POST` requests from this endpoint as well.
