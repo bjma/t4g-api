@@ -1,7 +1,7 @@
 {
   "name": "t4g-dl-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "RESTful API for Tech4Good's deep learning infrastructure",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

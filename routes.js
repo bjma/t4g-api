@@ -17,8 +17,9 @@ router.get('/', (req, res) => {
 
 // Routes for image datasets
 const imageController = require('./controllers/proj1/imageController');
-router.route('/proj1/imagData')
-    .get(imageController.index);
+router.route('/proj1/dataset')
+    .get(imageController.index)
+    .post(imageController.new);
     
 // Export routes to other files
 module.exports = router;
