@@ -7,7 +7,7 @@ const router = express.Router();
 
 const Image = require('./models/proj1/imageModel');
 
-// Default API response should return the database from the CNN project
+// Default API response 
 router.get('/', (req, res) => {
     res.json({
         status: "OK",
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 
 // Routes for image datasets
 const imageController = require('./controllers/proj1/imageController');
-router.route('/proj1')
+router.route('/proj1/imagData')
     .get(imageController.index);
     
 // Export routes to other files
