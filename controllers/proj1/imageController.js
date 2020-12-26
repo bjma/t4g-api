@@ -13,13 +13,21 @@ exports.index = async (req, res) => {
     });
  }
 
-// DELETE (remove) endpoint
-exports.delete = async (req, res) => {
-     await Image.remove({
-         _id: req.params._id
-     }, (err, content) => console.log(err));
-     res.json({
-         status: "success",
-         message: "Successfully deleted image."
-     })
- }
+// POST endpoint; adds a new image to the database (might tweak it to add all images)
+exports.new = async (req, res) => {
+    let image = new Image();
+    image.name = req.body.name ? req.body.name : contact.name;
+    image.byteData = req.body.byteData;
+    image.features = req.body.features;
+    // Save image
+    image.save((err) => {
+        if (err) {
+            res.json(err);
+        } else {
+            res.json({
+                message: "Successfully added new image.",
+                data: image,
+            });
+        }
+    });
+}
