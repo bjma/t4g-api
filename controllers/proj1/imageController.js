@@ -10,11 +10,9 @@ exports.index = async (req, res) => {
     // Source: https://stackoverflow.com/questions/9952649/convert-mongoose-docs-to-json
     let data = await Image.find({}, null, {limit: 50}).lean().exec((err, content) => {
         return res.json({
-            total: Image.count({}, (err, count) => {
-                return count;
-            }),
+            total: data.length,
             entries: data,
-        });
+        })
     });
  }
 

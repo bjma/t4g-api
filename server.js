@@ -22,14 +22,13 @@ const connection = mongoose.connection;
 // Open connection
 connection.once('open', () => {
     console.log("Successfully connected to database.");
-});
+    // Import our routes
+    const routes = require('./routes');
+    // Link the routes to our API
+    app.use('/api', routes);
 
-// Import our routes
-const routes = require('./routes');
-// Link the routes to our API
-app.use('/api', routes);
-
-// Launches the server on specified port
-app.listen(port, () => {
-    console.log(`API currently running on port ${port}`);
+    // Launches the server on specified port
+    app.listen(port, () => {
+        console.log(`API currently running on port ${port}`);
+    });
 });
