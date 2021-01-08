@@ -9,7 +9,11 @@ exports.index = async (req, res) => {
     // Really long string of functions that essentially converts the Mongoose document to JSON
     // Source: https://stackoverflow.com/questions/9952649/convert-mongoose-docs-to-json
     let data = await Image.find({}, null, {limit: 50}).lean().exec((err, content) => {
-        return res.end(JSON.stringify(content));
+        if (err) {
+            res.json(err);
+        } else {
+            return res.end(JSON.stringify(content));
+        }
     });
  }
 
@@ -30,4 +34,19 @@ exports.new = async (req, res) => {
             });
         }
     });
+}
+
+// DELETE endpoint; deletes image with specified id
+exports.delete = async (req, res) => {
+    Image.remove({
+        _id: req.params._id
+    }, (err, content) => {
+        if (err) {
+            res.json(err);
+        } else {
+            res.json({
+                message: "Successfully deleted image"
+            });
+        }
+    })
 }
