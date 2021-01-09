@@ -9,7 +9,7 @@ const fs = require('fs');
 
 // Express instance
 const app = express(); 
-app.use(cors()); // some op shit
+app.use(cors({origin: '*'})); // some op shit
 
 // Local port for testing stuff; gonna use Mongoose to hook this up to the db later
 const port = process.env.PORT || 3000;
