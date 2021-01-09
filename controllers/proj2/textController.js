@@ -5,7 +5,7 @@
  * handles requests and defines API endpoints.
  */
 
-const Text = require('../../models/proj2/textController');
+const Text = require('../../models/proj2/textModel');
 
 /**
  * GET endpoint;

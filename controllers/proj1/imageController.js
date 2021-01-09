@@ -20,6 +20,7 @@ exports.index = async (req, res) => {
  }
 
 // POST endpoint; adds a new image to the database (might tweak it to add all images)
+// (It works!!!)
 exports.new = async (req, res) => {
     const newImage = new Image({
         name: req.body.name,
