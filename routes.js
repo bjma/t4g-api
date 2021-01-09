@@ -20,6 +20,12 @@ const imageController = require('./controllers/proj1/imageController');
 router.route('/proj1/dataset')
     .get(imageController.index)
     .post(imageController.new);
+
+// Routes for text dataset for Project 2
+const textController = require('./controllers/proj2/textController');
+router.route('/proj2/dataset')
+    .get(textController.index)
+    .post(textController.new);
     
 // Export routes to other files
 module.exports = router;
