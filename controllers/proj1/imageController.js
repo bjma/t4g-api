@@ -21,22 +21,15 @@ exports.index = async (req, res) => {
 
 // POST endpoint; adds a new image to the database (might tweak it to add all images)
 exports.new = async (req, res) => {
-    //let image = new Image();
-    //image.name = req.body.name ? req.body.name : image.name;
-    //image.byteData = req.body.byteData;
-    //image.features = req.body.features;
-    //// Save image
-    //image.save((err) => {
-    //    if (err) {
-    //        return res.json(err);
-    //    } else {
-    //        return res.json({   
-    //            message: "Successfully added new image.",
-    //            data: image,
-    //        });
-    //    }
-    //});
-    return res.status(200).json({message: "This endpoint is currently working."}).end();
+    const newImage = new Image({
+        name: req.body.name,
+        byteData: req.body.byteData,
+        features: req.body.features,
+    });
+    // Save document into database
+    newImage.save()
+        .then(res.json({response: "ok"}))
+        .catch(e => res.json({message: e.message}));
 }
 
 // DELETE endpoint; deletes image with specified id
