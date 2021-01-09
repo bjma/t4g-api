@@ -6,10 +6,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const fs = require('fs');
+var bodyParser = require('body-parser');
 
 // Express instance
 const app = express(); 
+
+// Middleware
 app.use(cors({origin: '*'})); // some op shit
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Local port for testing stuff; gonna use Mongoose to hook this up to the db later
 const port = process.env.PORT || 3000;
