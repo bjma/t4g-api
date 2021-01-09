@@ -11,8 +11,9 @@ exports.index = async (req, res) => {
     // Source: https://stackoverflow.com/questions/9952649/convert-mongoose-docs-to-json
     let data = await Image.find({}, null, {limit: 50}).lean().exec((err, content) => {
         if (err) {
-            res.json(err);
+            res.json(err).end();
         } else {
+            // Should use end() in order to complete response.
             return res.end(JSON.stringify(content));
         }
     });
@@ -35,7 +36,7 @@ exports.new = async (req, res) => {
     //        });
     //    }
     //});
-    return res.status(200).json({message: "This endpoint is currently working."})
+    return res.status(200).json({message: "This endpoint is currently working."}).end();
 }
 
 // DELETE endpoint; deletes image with specified id
