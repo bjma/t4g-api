@@ -1,6 +1,6 @@
 /**
- * Schema for image data from the first project
- * Basically we do this to ensure that our responses from MongoDB are valid
+ * Model for how image data is stored in the database;
+ * Basically acts as a "struct" for each entry in the index.
  */
 const mongoose = require('mongoose');
 
@@ -19,5 +19,5 @@ const imageSchema = mongoose.Schema({
     }
 });
 
-// Export Image model
+/* Export Image model */
 module.exports = mongoose.model("Image", imageSchema, "image-data");

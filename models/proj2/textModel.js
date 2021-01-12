@@ -25,11 +25,11 @@
         type: String,
         required: true,
      },
-     features: {
+     labels: {
         type: Object,
         required: true,
-     }
+    },
  });
 
- // Export Text model
+ /* Export Text model */
  module.exports = mongoose.model("Text", textSchema, "text-query-data");

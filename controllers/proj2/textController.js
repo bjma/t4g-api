@@ -19,7 +19,7 @@ exports.index = async (req, res) => {
             return res.end(JSON.stringify(content));
         }
     });*/
-    return res.json({message: "This endpoint is currently working."})
+    return res.json({message: "This endpoint is currently working."});
 }
 
 /**

@@ -5,7 +5,11 @@
  */
 const Image = require('../../models/proj1/imageModel');
 
- // GET (read) endpoint
+ /**
+  * GET endpoint; retrieves data and returns it as a response in JSON format
+  * @param {*} req  Incoming request; should be GET
+  * @param {*} res  API response; should be in JSON format
+  */
 exports.index = async (req, res) => {
     // Really long string of functions that essentially converts the Mongoose document to JSON
     // Source: https://stackoverflow.com/questions/9952649/convert-mongoose-docs-to-json
@@ -14,13 +18,23 @@ exports.index = async (req, res) => {
             res.json(err).end();
         } else {
             // Should use end() in order to complete response.
-            return res.end(JSON.stringify(content));
+            let images = JSON.stringify(content);
+            return res.json({
+                data: {
+                    description: "Image data for Project 1; each image has corresponding fields for fileName, byteData, and features.",
+                    images: JSON.stringify(content)
+                }
+            })
+                .end();
         }
     });
  }
 
-// POST endpoint; adds a new image to the database (might tweak it to add all images)
-// (It works!!!)
+/**
+ * POST endpoint; sends a new document from requests into the database index
+ * @param {*} req  Incoming request; should be POST
+* @param {*} res  API response; just sends status/error codes
+ */
 exports.new = async (req, res) => {
     const newImage = new Image({
         name: req.body.name,
@@ -33,7 +47,7 @@ exports.new = async (req, res) => {
         .catch(e => res.json({message: e.message}));
 }
 
-// DELETE endpoint; deletes image with specified id
+/* DELETE endpoint; untested */
 exports.delete = async (req, res) => {
     Image.remove({
         _id: req.params._id

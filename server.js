@@ -1,6 +1,9 @@
 /**
  * Filename: index.js
- * All the fun stuff
+ * The crux of our API; it defines all the libraries we use,
+ * as well as handles most of the initialization for our API.
+ * 
+ * There isn't much to be done here.
  */
 const express = require('express');
 const mongoose = require('mongoose');
@@ -8,31 +11,29 @@ const cors = require('cors');
 const fs = require('fs');
 var bodyParser = require('body-parser');
 
-// Express instance
 const app = express(); 
 
-// Middleware
-app.use(cors({origin: '*'})); // some op shit
+/* Middleware for the API */
+app.use(cors({origin: '*'}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Local port for testing stuff; gonna use Mongoose to hook this up to the db later
+/* Port that the server runs on; don't change this */
 const port = process.env.PORT || 3000;
 
-// Establish connection to database
+/* Database information */
 const uri = process.env.MONGODB_URI;
 mongoose.connect(uri, {useUnifiedTopology: true, useNewUrlParser: true});
 const connection = mongoose.connection;
 
-// Open connection
+/* Launch app and establish connection */
 connection.once('open', () => {
     console.log("Successfully connected to database.");
-    // Import our routes
+    
+    /* Import routes; these represent different endpoints that our API offers. */
     const routes = require('./routes');
-    // Link the routes to our API
     app.use('/api', routes);
 
-    // Launches the server on specified port
     app.listen(port, () => {
         console.log(`API currently running on port ${port}`);
     });
