@@ -18,7 +18,6 @@ exports.index = async (req, res) => {
             res.json(err).end();
         } else {
             // Should use end() in order to complete response.
-            let images = JSON.stringify(content);
             return res.json({
                 data: {
                     description: "Image data for Project 1; each image has corresponding fields for fileName, byteData, and features.",
@@ -33,7 +32,7 @@ exports.index = async (req, res) => {
 /**
  * POST endpoint; sends a new document from requests into the database index
  * @param {*} req  Incoming request; should be POST
-* @param {*} res  API response; just sends status/error codes
+ * @param {*} res  API response; just sends status/error codes
  */
 exports.new = async (req, res) => {
     const newImage = new Image({
