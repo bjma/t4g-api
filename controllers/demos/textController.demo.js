@@ -5,4 +5,44 @@
  * Should only be used for demonstration purposes.
  */
 
- 
+ const { DemoModel } = require('../../models/proj2/textModel');
+
+ /** 
+  * GET endpoint;
+  * Retrieves data from collection specific to DemoModel 
+  * 
+  * Refer to: models/proj2/textModel.js
+  */
+exports.index = async (req, res) => {
+    let data = await DemoModel.find({}, null, {limit: 10}).lean().exec((err, content) => {
+        if (err) {
+            return res.json({
+                message: err
+            });
+        } else {
+            return res.json({
+                data: {
+                    description: "Congrats! Successfully received the following data from the database.",
+                    textData: JSON.stringify(content)
+                }
+            })
+                .end();
+        }
+    });
+}
+
+/**
+ * POST endpoint (THIS NEEDS TO BE TESTED THOROUGHLY);
+ * Indexes a new entry in the database. 
+ */
+exports.new = async (req, res) => {
+    let text = new DemoModel({
+        query: req.body.query,
+        answer: req.body.answer,
+        features: req.body.features,
+    });
+    // Save entry
+    text.save()
+        .then(res.json({response: "ok"}).end())
+        .catch(e => res.json({message: e.message}));
+}
