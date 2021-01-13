@@ -17,6 +17,10 @@
  const mongoose = require("mongoose");
 
  const textSchema = mongoose.Schema({
+     title: {
+        type: String,
+        required: true,
+     },
      query: {
          type: String,
          required: true,
@@ -38,5 +42,5 @@
 
  module.exports = {
     TextModel: TextModel,
-    DemoMode: DemoModel
+    DemoModel: DemoModel
  }
