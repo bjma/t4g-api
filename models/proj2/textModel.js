@@ -31,5 +31,12 @@
     },
  });
 
- /* Export Text model */
- module.exports = mongoose.model("Text", textSchema, "text-query-data");
+ /* Mongoose Model for text data for Project 2 */
+ const TextModel = mongoose.model("Text", textSchema, "text-query-data");
+ /* Mongoose model for text data to be used in demos; don't worry about this. */
+ const DemoModel = mongoose.model("DemoModel", textSchema, "nlp-api-demo");
+
+ module.exports = {
+    TextModel: TextModel,
+    DemoMode: DemoModel
+ }
