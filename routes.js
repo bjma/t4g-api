@@ -28,6 +28,12 @@ const textController = require('./controllers/proj2/textController');
 router.route('/proj2/dataset')
     .get(textController.index)
     .post(textController.new);
+
+/* Routes for API functionality demo */
+const textControllerDemo = require('./controllers/demos/textController.demo');
+router.route('/demos/nlp')
+    .get(textControllerDemo.index)
+    .post(textControllerDemo.new);
     
 /* Export routes to other files */
 module.exports = router;
