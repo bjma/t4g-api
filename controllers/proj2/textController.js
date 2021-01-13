@@ -5,7 +5,8 @@
  * handles requests and defines API endpoints.
  */
 
-const Text = require('../../models/proj2/textModel');
+ /* Import TextModel from the textModel module */
+const { TextModel } = require('../../models/proj2/textModel');
 
 /**
  * GET endpoint;
@@ -28,7 +29,7 @@ exports.index = async (req, res) => {
  * to handle duplicate exceptions.
  */
 exports.new = async (req, res) => {
-    let text = new Text({
+    let text = new TextModel({
         query: req.body.query,
         answer: req.body.answer,
         features: req.body.features,
