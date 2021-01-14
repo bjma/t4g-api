@@ -7,8 +7,6 @@
 const express = require('express');
 const router = express.Router();
 
-const Image = require('./models/proj1/imageModel');
-
 /* Default API response */
 router.get('/', (req, res) => {
     res.json({
