@@ -22,7 +22,7 @@ exports.index = async (req, res) => {
         } else {
             return res.json({
                 description: "Congrats! Successfully received the following data from the database.",
-                data: JSON.stringify(content)
+                data: content,
             })
                 .end();
         }
