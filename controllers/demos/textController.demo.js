@@ -47,6 +47,5 @@ exports.new = async (req, res) => {
     });
     // Save entry
     text.save()
-        .then(res.json({response: "ok"}).end())
-        .catch(e => res.json({message: e.message}));
+        .then(res.send("Successfully uploaded to DB").end());
 }
