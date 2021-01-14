@@ -22,6 +22,7 @@ exports.index = async (req, res) => {
         } else {
             return res.json({
                 description: "Congrats! Successfully received the following data from the database.",
+                length: content.length,
                 data: content,
             })
                 .end();
@@ -60,5 +61,6 @@ exports.new = async (req, res) => {
         // Save entry
         text.save();
     }
-    res.send("Successfully uploaded data into DB.").end();
+    res.send("Successfully uploaded data into DB.")
+        .end();
 }

@@ -13,13 +13,21 @@ const { TextModel } = require('../../models/proj2/textModel');
  * Retrieves text data by sending a GET request to the database.
  */
 exports.index = async (req, res) => {
-    /*let data = await TextModel.find({}, null, {limit: 50}).lean().exec((err, content) => {
+    let data = await TextModel.find({}, null, {limit: 50}).lean().exec((err, content) => {
         if (err) {
-            return res.json(err);
+            return res.json({
+                message: err
+            });
         } else {
-            return res.end(JSON.stringify(content));
+            return res.json({
+                description: "Congrats! Successfully received the following data from the database.",
+                length: content.length,
+                data: content,
+            })
+                .end();
         }
-    });*/
+    });
+
     return res.json({message: "This endpoint is currently working."});
 }
 
@@ -42,8 +50,7 @@ exports.new = async (req, res) => {
                 labels: element.labels,
             });
 
-            text.save()
-                .then(res.send("Successfully uploaded to DB.").end())
+            text.save();
 
         }
     } else {
@@ -54,7 +61,8 @@ exports.new = async (req, res) => {
             labels: req.body.labels,
         });
         // Save entry
-        text.save()
-            .then(res.send("Successfully uploaded to DB").end());
+        text.save();
     }
+    res.send("Successfully uploaded to DB.")
+        .end();
 }
