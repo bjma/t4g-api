@@ -18,19 +18,19 @@
 
  const textSchema = mongoose.Schema({
      title: {
-        type: String,
+        type: Array,
         required: true,
      },
      query: {
-         type: String,
+         type: Array,
          required: true,
      },
      answer: {
-        type: String,
+        type: Array,
         required: true,
      },
      labels: {
-        type: Object,
+        type: String,
         required: true,
     },
  });
