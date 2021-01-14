@@ -14,7 +14,7 @@
   * Refer to: models/proj2/textModel.js
   */
 exports.index = async (req, res) => {
-    /*let data = await DemoModel.find({}, null, {limit: 10}).lean().exec((err, content) => {
+    let data = await DemoModel.find({}, null, {limit: 10}).lean().exec((err, content) => {
         if (err) {
             return res.json({
                 message: err
@@ -28,10 +28,6 @@ exports.index = async (req, res) => {
             })
                 .end();
         }
-    });*/
-    return res.json({
-        status: "OK",
-        message: "GET endpoint currently working."
     });
 }
 
