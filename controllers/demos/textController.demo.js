@@ -47,8 +47,7 @@ exports.new = async (req, res) => {
                 labels: element.labels,
             });
 
-            text.save()
-                .then(res.send("Successfully uploaded to DB.").end())
+            text.save();
 
         }
     } else {
@@ -59,7 +58,7 @@ exports.new = async (req, res) => {
             labels: req.body.labels,
         });
         // Save entry
-        text.save()
-            .then(res.send("Successfully uploaded to DB").end());
+        text.save();
     }
+    res.send("Successfully uploaded data into DB.").end();
 }
