@@ -41,9 +41,10 @@ exports.index = async (req, res) => {
  */
 exports.new = async (req, res) => {
     let text = new DemoModel({
+        title: req.body.title,
         query: req.body.query,
         answer: req.body.answer,
-        features: req.body.features,
+        labels: req.body.labels,
     });
     // Save entry
     text.save()
