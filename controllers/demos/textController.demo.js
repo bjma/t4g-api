@@ -34,13 +34,32 @@ exports.index = async (req, res) => {
  * Indexes a new entry in the database. 
  */
 exports.new = async (req, res) => {
-    let text = new DemoModel({
-        title: req.body.title,
-        query: req.body.query,
-        answer: req.body.answer,
-        labels: req.body.labels,
-    });
-    // Save entry
-    text.save()
-        .then(res.send("Successfully uploaded to DB").end());
+    /* If the request is of type Array, we need to handle it differently
+        than if it were a single Object. */
+    if (req.body instanceof Array) {
+        for (let i = 0; i < req.body.length; i++) {
+            let element = req.body[i]; /* Reference to JSON content */
+
+            let text = new DemoModel({
+                title: element.title,
+                query: element.query,
+                answer: element.answer,
+                labels: element.labels,
+            });
+
+            text.save()
+                .then(res.send("Successfully uploaded to DB.").end())
+
+        }
+    } else {
+        let text = new DemoModel({
+            title: req.body.title,
+            query: req.body.query,
+            answer: req.body.answer,
+            labels: req.body.labels,
+        });
+        // Save entry
+        text.save()
+            .then(res.send("Successfully uploaded to DB").end());
+    }
 }

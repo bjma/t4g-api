@@ -29,14 +29,32 @@ exports.index = async (req, res) => {
  * to handle duplicate exceptions.
  */
 exports.new = async (req, res) => {
-    let text = new TextModel({
-        title: req.body.title,
-        query: req.body.query,
-        answer: req.body.answer,
-        labels: req.body.labels,
-    });
-    // Save entry
-    text.save()
-        .then(res.json({response: "ok"}).end())
-        .catch(e => res.json({message: e.message}));
+    /* If the request is of type Array, we need to handle it differently
+        than if it were a single Object. */
+    if (req.body instanceof Array) {/* Reference to JSON content */
+        for (let i = 0; i < req.body.length; i++) {
+            let element = req.body[i]; /* Reference to JSON content */
+
+            let text = new TextModel({
+                title: element.title,
+                query: element.query,
+                answer: element.answer,
+                labels: element.labels,
+            });
+
+            text.save()
+                .then(res.send("Successfully uploaded to DB.").end())
+
+        }
+    } else {
+        let text = new TextModel({
+            title: req.body.title,
+            query: req.body.query,
+            answer: req.body.answer,
+            labels: req.body.labels,
+        });
+        // Save entry
+        text.save()
+            .then(res.send("Successfully uploaded to DB").end());
+    }
 }
