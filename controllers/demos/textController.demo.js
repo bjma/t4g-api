@@ -21,10 +21,8 @@ exports.index = async (req, res) => {
             });
         } else {
             return res.json({
-                data: {
-                    description: "Congrats! Successfully received the following data from the database.",
-                    textData: JSON.stringify(content)
-                }
+                description: "Congrats! Successfully received the following data from the database.",
+                data: JSON.stringify(content)
             })
                 .end();
         }

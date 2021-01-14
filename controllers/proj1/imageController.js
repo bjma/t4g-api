@@ -19,10 +19,8 @@ exports.index = async (req, res) => {
         } else {
             // Should use end() in order to complete response.
             return res.json({
-                data: {
-                    description: "Image data for Project 1; each image has corresponding fields for fileName, byteData, and features.",
-                    images: JSON.stringify(content)
-                }
+                description: "Image data for Project 1; each image has corresponding fields for fileName, byteData, and features.",
+                data: JSON.stringify(content)
             })
                 .end();
         }
