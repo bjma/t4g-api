@@ -44,23 +44,21 @@ exports.new = async (req, res) => {
             let text = new DemoModel({
                 title: element.title,
                 query: element.query,
-                answer: element.answer,
                 labels: element.labels,
             });
 
             text.save();
-
         }
     } else {
         let text = new DemoModel({
             title: req.body.title,
             query: req.body.query,
-            answer: req.body.answer,
             labels: req.body.labels,
         });
-        // Save entry
+
         text.save();
     }
+    
     res.send("Successfully uploaded data into DB.")
         .end();
 }
