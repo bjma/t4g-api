@@ -25,10 +25,6 @@
          type: Array,
          required: true,
      },
-     answer: {
-        type: Array,
-        required: true,
-     },
      labels: {
         type: String,
         required: true,
@@ -43,4 +39,4 @@
  module.exports = {
     TextModel: TextModel,
     DemoModel: DemoModel
- }
+}
