@@ -32,6 +32,12 @@ const textControllerDemo = require('./controllers/demos/textController.demo');
 router.route('/demos/nlp')
     .get(textControllerDemo.index)
     .post(textControllerDemo.new);
+
+/* Route for frontend interface for POSTing data to DB. 
+    Renders HTML using EJS (refer to: ./views/text-post.ejs) */
+router.get('/post/proj2', (req, res) => {
+    res.render('text-post');
+});
     
 /* Export routes to other files */
 module.exports = router;
