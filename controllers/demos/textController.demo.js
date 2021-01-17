@@ -49,15 +49,10 @@ exports.new = async (req, res) => {
             text.save();
         }
     } else {
-        let data = {};
         /* Check if request is of type form */
-        if (req.body.data == "undefined") {
-            data = req.body;
-        } else {
-            data = req.body.data;
-        }
+        let data = (req.body.data == "undefined") ? req.body : req.body.data;
         console.log(data);
-        console.log(data.labels);
+
         let text = new DemoModel({
             title: data.title,
             query: data.query,

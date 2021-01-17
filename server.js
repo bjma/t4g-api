@@ -16,7 +16,7 @@ const app = express();
 /* Middleware for the API */
 app.use(cors({origin: '*'}));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false })); /* Parse x-www-form-urlencoded */
 
 /* HTML Rendering */
 app.set('view engine', 'ejs'); 
