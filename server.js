@@ -20,10 +20,10 @@ const middlewares = [
     bodyParser.urlencoded({ extended: true })
 ];
 
+/* Add middleware */
 app.use(middlewares);
 
 /* HTML Rendering */
-app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs'); 
 
 /* Port that the server runs on; don't change this */
