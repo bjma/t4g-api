@@ -51,7 +51,7 @@ exports.new = async (req, res) => {
     } else if (req.body.data != "undefined") { /* Case when request is form data */
         /* Get form data */
         let data = req.body.data;
-        console.log(data);
+        console.log(data.labels);
 
         /* Save like we normally do */
         let text = new DemoModel({
