@@ -1,24 +1,17 @@
+<h1>Tech4Good Deep Learning API</h1>
 <h2 class="page-header">Upload Data</h2>
-<form method="post" action="/users/register">
+<p>After running the webscraper, the JSON file should contain
+    an array consisting of each question found on Stack Overflow.
+    <br>
+</p>
+<p>Simply paste your file content and paste it in the text box, then hit submit!
+    <br> 
+    If you get an error, <i>make sure your data is in the right format.</i>
+</p>
+<form method="post" action="/demos/nlp">
   <div class="form-group">
-    <label>Name</label>
-    <input type="text" class="form-control" placeholder="Name" name="name">
+    <textarea type="text" name="data" class="form-control" id="data" placeholder="JSON content" autocomplete="off"></textarea>
   </div>
-  <div class="form-group">
-    <label>Username</label>
-    <input type="text" class="form-control" placeholder="Username" name="username">
-  </div>
-  <div class="form-group">
-    <label>Email</label>
-    <input type="email" class="form-control" placeholder="Email" name="email">
-  </div>
-  <div class="form-group">
-    <label>Password</label>
-    <input type="password" class="form-control" placeholder="Password" name="password">
-  </div>
-  <div class="form-group">
-    <label>Confirm Password</label>
-    <input type="password" class="form-control" placeholder="Password" name="password2">
-  </div>
+  <br>
   <button type="submit" class="btn btn-default">Submit</button>
 </form>
