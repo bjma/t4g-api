@@ -14,14 +14,11 @@ var bodyParser = require('body-parser');
 const app = express(); 
 
 /* Middleware for the API */
-const middlewares = [
-    cors({origin: '*'}),
-    bodyParser.json(),
-    bodyParser.urlencoded({ extended: true })
-];
-
-/* Add middleware */
-app.use(middlewares);
+app.configure(() => {
+    app.use(cors({origin: '*'}));
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
+});
 
 /* HTML Rendering */
 app.set('view engine', 'ejs'); 
