@@ -49,7 +49,7 @@ exports.new = async (req, res) => {
             text.save();
         }
     } else {
-        let data;
+        let data = {};
         /* Check if request is of type form */
         if (req.body.data == "undefined") {
             data = req.body;
