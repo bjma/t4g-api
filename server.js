@@ -20,7 +20,7 @@ const middlewares = [
     bodyParser.urlencoded({ extended: true })
 ];
 
-app.use(middelwares);
+app.use(middlewares);
 
 /* HTML Rendering */
 app.set('views', path.join(__dirname, 'views'));
