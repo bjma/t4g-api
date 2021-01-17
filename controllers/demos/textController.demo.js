@@ -35,7 +35,7 @@ exports.index = async (req, res) => {
  * Indexes a new entry in the database. 
  */
 exports.new = async (req, res) => {
-    console.log(req.body.labels);
+    console.log(req.body);
     //console.log(typeof(req));
     /* If the request is of type Array, we need to handle it differently
         than if it were a single Object. */
