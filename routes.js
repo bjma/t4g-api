@@ -38,12 +38,8 @@ router.route('/demos/nlp')
 router.route('/post/proj2')
     .get((req, res) => {
         res.render('text-post');
-    })
-    .post((req, res) => {
-        res.render('text-post', {
-            data: req.body,
-        });
     });
+    //.post((req, res) => {res.render('text-post', {data: req.body,});});
   
 /* Export routes to other files */
 module.exports = router;
