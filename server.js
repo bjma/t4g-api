@@ -17,6 +17,7 @@ const app = express();
 app.use(cors({origin: '*'}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.set('view engine', 'ejs'); /* HTML Rendering */
 
 /* Port that the server runs on; don't change this */
 const port = process.env.PORT || 3000;
