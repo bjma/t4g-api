@@ -1,0 +1,5 @@
+{
+    "title": ["this", "is", "a", "test"],
+    "query": ["if", "you", "see", "this,", " the", "frontend", "works"],
+    "labels": "success!"
+}
