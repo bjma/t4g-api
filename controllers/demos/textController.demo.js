@@ -25,7 +25,7 @@ exports.index = async (req, res) => {
                 length: content.length,
                 data: content,
             })
-                .end();
+            .end();
         }
     });
 }
