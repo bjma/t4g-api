@@ -50,7 +50,8 @@ exports.new = async (req, res) => {
         }
     } else {
         /* Check if request is of type form */
-        let data = (req.body.data == "undefined") ? req.body : req.body.data;
+        //let data = (req.body.data == "undefined") ? req.body : req.body.data;
+        let data = req.body;
         console.log(data);
 
         let text = new DemoModel({
