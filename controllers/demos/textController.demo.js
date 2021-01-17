@@ -48,24 +48,20 @@ exports.new = async (req, res) => {
             });
             text.save();
         }
-    } else if (req.body.data != "undefined") { /* Case when request is form data */
-        /* Get form data */
-        let data = req.body.data;
+    } else {
+        let data;
+        /* Check if request is of type form */
+        if (req.body.data == "undefined") {
+            data = req.body;
+        } else {
+            data = req.body.data;
+        }
         console.log(data);
         console.log(data.labels);
-
-        /* Save like we normally do */
         let text = new DemoModel({
             title: data.title,
             query: data.query,
             labels: data.labels,
-        });
-        text.save();
-    } else {
-        let text = new DemoModel({
-            title: req.body.title,
-            query: req.body.query,
-            labels: req.body.labels,
         });
         text.save();
     }
