@@ -35,8 +35,6 @@ exports.index = async (req, res) => {
  * Indexes a new entry in the database. 
  */
 exports.new = async (req, res) => {
-    console.log(req.body.data);
-    //console.log(typeof(req));
     /* If the request is of type Array, we need to handle it differently
         than if it were a single Object. */
     if (req.body instanceof Array) {
@@ -51,9 +49,17 @@ exports.new = async (req, res) => {
 
             text.save();
         }
-    } else if (req.body instanceof object) {
+    } else if (req.body.data != "undefined") { /* Case when request is form data */
+        /* Get form data */
         let data = req.body.data;
-        console.log(req.body);
+        console.log(data);
+
+        /* Save like we normally do */
+        let text = new DemoModel({
+            title: data.title,
+            query: data.query,
+            labels: data.labels,
+        });
     } else {
         let text = new DemoModel({
             title: req.body.title,
