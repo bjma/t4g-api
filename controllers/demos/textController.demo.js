@@ -46,7 +46,6 @@ exports.new = async (req, res) => {
                 query: element.query,
                 labels: element.labels,
             });
-
             text.save();
         }
     } else if (req.body.data != "undefined") { /* Case when request is form data */
@@ -60,13 +59,13 @@ exports.new = async (req, res) => {
             query: data.query,
             labels: data.labels,
         });
+        text.save();
     } else {
         let text = new DemoModel({
             title: req.body.title,
             query: req.body.query,
             labels: req.body.labels,
         });
-
         text.save();
     }
     
