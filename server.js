@@ -17,7 +17,10 @@ const app = express();
 app.use(cors({origin: '*'}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set('view engine', 'ejs'); /* HTML Rendering */
+
+/* HTML Rendering */
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs'); 
 
 /* Port that the server runs on; don't change this */
 const port = process.env.PORT || 3000;
