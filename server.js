@@ -14,7 +14,7 @@ var bodyParser = require('body-parser');
 const app = express(); 
 
 /* Middleware for the API */
-middlewares = [
+const middlewares = [
     cors({origin: '*'}),
     bodyParser.json(),
     bodyParser.urlencoded({ extended: true })
