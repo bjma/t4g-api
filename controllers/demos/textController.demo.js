@@ -53,7 +53,7 @@ exports.new = async (req, res) => {
         //let data = (req.body.data == "undefined") ? req.body : req.body.data;
         let data = req.body;
         console.log(data);
-
+        console.log(req.body);
         let text = new DemoModel({
             title: data.title,
             query: data.query,
