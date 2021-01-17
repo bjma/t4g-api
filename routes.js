@@ -33,11 +33,17 @@ router.route('/demos/nlp')
     .get(textControllerDemo.index)
     .post(textControllerDemo.new);
 
-/* Route for frontend interface for making POST request to API. 
-    Renders HTML using EJS (refer to: ./views/text-post.ejs) */
-router.post('/post/proj2', (req, res) => {
-    res.render('text-post');
-});
-    
+/* Routes for the frontend interface used to upload scraped data.
+    This is specifically for Project 2. */
+router.route('/post/proj2')
+    .get((req, res) => {
+        res.render('text-post');
+    })
+    .post((req, res) => {
+        res.render('text-post', {
+            data: req.body,
+        });
+    });
+  
 /* Export routes to other files */
 module.exports = router;
