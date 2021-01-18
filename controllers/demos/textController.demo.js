@@ -49,19 +49,14 @@ exports.new = async (req, res) => {
             text.save();
         }
     } else {
-        /**
-         * TODO: Fix it so that req.body.data is not undefined 
-         * + look into opened SO tabs
-         */
         /* Check if request is of type form */
-        //let data = (req.body.data == "undefined") ? req.body : req.body.data;
+        let data = {};
         if (typeof req.body.data != 'undefined') {
-            let foo = JSON.parse(req.body.data);
-            console.log(foo.labels);
-
+            data = JSON.parse(req.body.data);
+        } else {
+            data = req.body;
         }
-        let data = req.body;
-        //console.log(data);
+        console.log(data);
         //console.log(req.body);
         let text = new DemoModel({
             title: data.title,
