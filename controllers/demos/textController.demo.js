@@ -56,7 +56,7 @@ exports.new = async (req, res) => {
         } else {
             data = req.body;
         }
-        console.log(data);
+        //console.log(data);
         //console.log(req.body);
         let text = new DemoModel({
             title: data.title,

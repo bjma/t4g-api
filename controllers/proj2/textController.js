@@ -40,22 +40,27 @@ exports.new = async (req, res) => {
     if (req.body instanceof Array) {/* Reference to JSON content */
         for (let i = 0; i < req.body.length; i++) {
             let element = req.body[i]; /* Reference to JSON content */
-
-            let text = new TextModel({
+            let text = new TextModel({ /* Create new document for current element */
                 title: element.title,
                 query: element.query,
                 labels: element.labels,
             });
-
+            /* Save into DB */
             text.save();
         }
     } else {
+        /* Check if request is of type form */
+        let data = {};
+        if (typeof req.body.data != 'undefined') {
+            data = JSON.parse(req.body.data);
+        } else {
+            data = req.body;
+        }
         let text = new TextModel({
-            title: req.body.title,
-            query: req.body.query,
-            labels: req.body.labels,
+            title: data.title,
+            query: data.query,
+            labels: data.labels,
         });
-
         text.save();
     }
     /* Resolve request */
