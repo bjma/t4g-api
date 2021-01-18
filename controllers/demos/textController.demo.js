@@ -57,7 +57,7 @@ exports.new = async (req, res) => {
         //let data = (req.body.data == "undefined") ? req.body : req.body.data;
         if (typeof req.body.data != 'undefined') {
             let foo = JSON.parse(req.body.data);
-            console.log(foo.title);
+            console.log(foo.labels);
 
         }
         let data = req.body;
