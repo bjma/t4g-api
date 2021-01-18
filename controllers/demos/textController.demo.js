@@ -56,7 +56,7 @@ exports.new = async (req, res) => {
         /* Check if request is of type form */
         //let data = (req.body.data == "undefined") ? req.body : req.body.data;
         if (typeof req.body.data != 'undefined') {
-            console.log(req.body.data);
+            console.log(JSON.parse(req.body.data));
         }
         let data = req.body;
         console.log(data);

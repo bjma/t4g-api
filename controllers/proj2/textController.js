@@ -27,8 +27,6 @@ exports.index = async (req, res) => {
             .end();
         }
     });
-
-    return res.json({message: "This endpoint is currently working."});
 }
 
 /**
