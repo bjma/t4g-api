@@ -20,7 +20,7 @@ exports.index = async (req, res) => {
             });
         } else {
             return res.json({
-                description: "Congrats! Successfully received the following data from the database.",
+                description: "Successfully received the following data from the database.",
                 length: content.length,
                 data: content,
             })
@@ -35,35 +35,47 @@ exports.index = async (req, res) => {
  * to handle duplicate exceptions.
  */
 exports.new = async (req, res) => {
+    let data = {};
+        
+    /* Check if request is of type form */
+    // Just added since we don't know if form data is an array or single object
+    // be sure to test this if you see this comment :)
+    if (typeof req.body.data != 'undefined') {
+        data = JSON.parse(req.body.data);
+    } else {
+        data = req.body;
+    }
     /* If the request is of type Array, we need to handle it differently
         than if it were a single Object. */
-    if (req.body instanceof Array) {/* Reference to JSON content */
-        for (let i = 0; i < req.body.length; i++) {
-            let element = req.body[i]; /* Reference to JSON content */
+    if (data instanceof Array) {
+        for (let i = 0; i < data.length; i++) {
+            let element = data[i]; /* Reference to JSON content */
             let text = new TextModel({ /* Create new document for current element */
                 title: element.title,
                 query: element.query,
                 labels: element.labels,
             });
             /* Save into DB */
-            text.save();
+            try {
+                text.save();
+            } catch (err) {
+                res.send({ err });
+            }
         }
+        res.send("Successfully uploaded to DB.").end();
     } else {
-        /* Check if request is of type form */
-        let data = {};
-        if (typeof req.body.data != 'undefined') {
-            data = JSON.parse(req.body.data);
-        } else {
-            data = req.body;
-        }
         let text = new TextModel({
             title: data.title,
             query: data.query,
             labels: data.labels,
         });
-        text.save();
+        /* TODO: Add error handling for POST and GET requests, as well as duplicate entries */
+        try {
+            text.save();
+            res.send("Successfully uploaded to DB.").end();
+        } catch (err) {
+            console.log('error', err);
+            res.send({ err });
+        }
     }
-    /* Resolve request */
-    res.send("Successfully uploaded to DB.")
-        .end();
 }
