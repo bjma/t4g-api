@@ -45,6 +45,7 @@ exports.new = async (req, res) => {
     } else {
         data = req.body;
     }
+
     /* If the request is of type Array, we need to handle it differently
         than if it were a single Object. */
     if (data instanceof Array) {
@@ -57,13 +58,13 @@ exports.new = async (req, res) => {
             });
             /* Save into DB */
             text.save()
-            .then((user) => {
-                return res.send({message:"Success!"});
-            })
-            .catch((err) => {
-                console.log(err);
-                return res.send({err});
-            })
+                .then((user) => {
+                    return res.send({message:"Success!"});
+                })
+                .catch((err) => {
+                    console.log(err);
+                    return res.send({err});
+                });
         }
     } else {
         let text = new TextModel({
@@ -74,11 +75,12 @@ exports.new = async (req, res) => {
         /* TODO: Add error handling for POST and GET requests, as well as duplicate entries */
         text.save()
             .then((user) => {
-                return res.send({message:"Success!"});
+                //return res.send({message:"Success!"});
+                return res.redirect('../datasets/proj2');
             })
             .catch((err) => {
                 console.log(err);
                 return res.send({err});
-            })
+            });
     }
 }
