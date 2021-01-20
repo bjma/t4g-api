@@ -58,7 +58,7 @@ exports.new = async (req, res) => {
             /* Save into DB */
             text.save()
             .then((user) => {
-                res.redirect('api/datasets/proj2')
+                res.redirect('/')
             })
             .catch((err) => {
                 console.log(err);
@@ -74,7 +74,7 @@ exports.new = async (req, res) => {
         /* TODO: Add error handling for POST and GET requests, as well as duplicate entries */
         text.save()
             .then((user) => {
-                res.redirect('api/datasets/proj2')
+                res.redirect('/')
             })
             .catch((err) => {
                 console.log(err);
