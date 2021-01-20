@@ -62,7 +62,7 @@ exports.new = async (req, res) => {
             })
             .catch((err) => {
                 console.log(err);
-                return res.send(400, "Bad Request");
+                return res.send(err);
             })
         }
     } else {
