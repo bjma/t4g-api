@@ -56,13 +56,15 @@ exports.new = async (req, res) => {
                 labels: element.labels,
             });
             /* Save into DB */
-            try {
-                text.save();
-            } catch (err) {
-                res.send({ err });
-            }
+            text.save()
+            .then((user) => {
+                res.redirect('/datasets/proj2')
+            })
+            .catch((err) => {
+                console.log(err);
+                return res.send(400, "Bad Request");
+            })
         }
-        res.send("Successfully uploaded to DB.").end();
     } else {
         let text = new TextModel({
             title: data.title,
@@ -70,12 +72,13 @@ exports.new = async (req, res) => {
             labels: data.labels,
         });
         /* TODO: Add error handling for POST and GET requests, as well as duplicate entries */
-        try {
-            text.save();
-            res.send("Successfully uploaded to DB.").end();
-        } catch (err) {
-            console.log('error', err);
-            res.send({ err });
-        }
+        text.save()
+            .then((user) => {
+                res.redirect('/datasets/proj2')
+            })
+            .catch((err) => {
+                console.log(err);
+                return res.send(400, "Bad Request");
+            })
     }
 }
