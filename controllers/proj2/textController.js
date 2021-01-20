@@ -58,11 +58,11 @@ exports.new = async (req, res) => {
             /* Save into DB */
             text.save()
             .then((user) => {
-                res.redirect('/datasets/proj2')
+                res.redirect('api/datasets/proj2')
             })
             .catch((err) => {
                 console.log(err);
-                return res.send(err);
+                return res.send({err});
             })
         }
     } else {
@@ -74,11 +74,11 @@ exports.new = async (req, res) => {
         /* TODO: Add error handling for POST and GET requests, as well as duplicate entries */
         text.save()
             .then((user) => {
-                res.redirect('/datasets/proj2')
+                res.redirect('api/datasets/proj2')
             })
             .catch((err) => {
                 console.log(err);
-                return res.send(400, "Bad Request");
+                return res.send({err});
             })
     }
 }
