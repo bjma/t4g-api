@@ -67,7 +67,7 @@ exports.new = async (req, res) => {
                 })
                 .catch((err) => {
                     console.log(err);
-                    return res.send({err});
+                    return res.redirect('../errors');
                 });
         }
     } else {
@@ -84,7 +84,7 @@ exports.new = async (req, res) => {
             })
             .catch((err) => {
                 console.log(err);
-                return res.send({err});
+                return res.redirect('../errors');
             });
     }
 }
