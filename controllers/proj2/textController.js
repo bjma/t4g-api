@@ -41,7 +41,11 @@ exports.new = async (req, res) => {
     // Just added since we don't know if form data is an array or single object
     // be sure to test this if you see this comment :)
     if (typeof req.body.data != 'undefined') {
-        data = JSON.parse(req.body.data);
+        try {
+            data = JSON.parse(req.body.data);
+        } catch (err) {
+            return res.redirect('../errors');
+        }
     } else {
         data = req.body;
     }

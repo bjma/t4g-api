@@ -39,6 +39,14 @@ router.route('/post/proj2')
     .get((req, res) => {
         res.render('text-post');
     });
-  
+
+/* Routes for error handling */
+router.get('/errors', (req, res) => {
+    res.json({
+        status: "ERROR",
+        message: "Oops! Something went wrong, probably a bad request."
+    });
+});
+
 /* Export routes to other files */
 module.exports = router;
