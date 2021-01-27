@@ -25,7 +25,7 @@
          type: Array,
          required: true,
      },
-     labels: {
+     label: {
         type: String,
         required: true,
     },

@@ -58,7 +58,7 @@ exports.new = async (req, res) => {
             let text = new TextModel({ /* Create new document for current element */
                 title: element.title,
                 query: element.query,
-                labels: element.labels,
+                label: element.label,
             });
             /* Save into DB */
             text.save()
@@ -71,7 +71,7 @@ exports.new = async (req, res) => {
         let text = new TextModel({
             title: data.title,
             query: data.query,
-            labels: data.labels,
+            label: data.label,
         });
         /* TODO: Add error handling for POST and GET requests, as well as duplicate entries */
         text.save()
