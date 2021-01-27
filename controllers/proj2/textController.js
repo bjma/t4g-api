@@ -20,7 +20,7 @@ exports.index = async (req, res) => {
             });
         } else {
             return res.json({
-                description: "Successfully received the following data from the database.",
+                description: `Successfully received ${content.length} items from the database.`,
                 length: content.length,
                 data: content,
             })
