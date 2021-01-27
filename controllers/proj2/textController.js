@@ -62,14 +62,13 @@ exports.new = async (req, res) => {
             });
             /* Save into DB */
             text.save()
-                .then((user) => {
-                    return res.redirect('../datasets/proj2');
-                })
                 .catch((err) => {
                     console.log(err);
                     return res.redirect('../errors');
                 });
         }
+        /* Resolve response */
+        return res.redirect('../datasets/proj2');
     } else {
         let text = new TextModel({
             title: data.title,
