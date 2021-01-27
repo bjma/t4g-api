@@ -13,7 +13,7 @@ const { TextModel } = require('../../models/proj2/textModel');
  * Retrieves text data by sending a GET request to the database.
  */
 exports.index = async (req, res) => {
-    let data = await TextModel.find({}, null, {limit: 50}).lean().exec((err, content) => {
+    let data = await TextModel.find({}, null).lean().exec((err, content) => {
         if (err) {
             return res.json({
                 message: err
