@@ -41,4 +41,6 @@ connection.once('open', () => {
     app.listen(port, () => {
         console.log(`API currently running on port ${port}`);
     });
+    /* Set timeout to 5 minutes */
+    app.setTimeout(300000);
 });
