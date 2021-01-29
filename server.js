@@ -38,7 +38,7 @@ connection.once('open', () => {
     const routes = require('./routes');
     app.use('/api', routes);
 
-    let server = app.listen(port, () => {
+    const server = app.listen(port, () => {
         console.log(`API currently running on port ${port}`);
     });
     server.setTimeout(120000); // Set timeout to 2 minutes
