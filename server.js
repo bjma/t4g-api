@@ -10,7 +10,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const fs = require('fs');
 const bodyParser = require('body-parser');
-const timeOut = require('connect-timeout'); //express v4
 
 const app = express(); 
 
@@ -19,7 +18,6 @@ app.use(cors({origin: '*'}));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false })); /* Parse x-www-form-urlencoded */
 app.use(express.json());
-app.use(timeOut(300000));
 
 /* HTML Rendering */
 app.set('view engine', 'ejs'); 
@@ -40,7 +38,8 @@ connection.once('open', () => {
     const routes = require('./routes');
     app.use('/api', routes);
 
-    app.listen(port, () => {
+    let server = app.listen(port, () => {
         console.log(`API currently running on port ${port}`);
     });
+    server.timeout = 120000; // Set timeout to 2 minutes
 });
