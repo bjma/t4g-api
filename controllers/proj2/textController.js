@@ -50,6 +50,7 @@ exports.new = async (req, res) => {
         try {
             data = JSON.parse(req.body.data);
         } catch (err) {
+            console.log(err);
             return res.redirect('../errors');
         }
     } else {
