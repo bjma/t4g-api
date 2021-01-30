@@ -36,6 +36,7 @@ function start() {
         const collection = db.collection(job.collection);
 
         let data = job.data;
+        console.log(data);
 
         /* If incoming request data is an array, process it like so */
         if (data instanceof Array) {
