@@ -9,7 +9,7 @@ const { MongoClient } = require("mongodb");
 
 /* Setup MongoDB instance */
 const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri);
+const client = new MongoClient(uri, { useUnifiedTopology: true });
 const dbName = 'datasets';
 
 /* Connect to Heroku provided URL for Redis */
