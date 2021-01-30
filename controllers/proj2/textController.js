@@ -5,6 +5,12 @@
  * handles requests and defines API endpoints.
  */
 
+ /* Define a queue for processing background jobs */
+const Queue = require("bull");
+const REDIS_URL = process.env.REDIS_URL;
+
+let workQueue = new Queue("work", REDIS_URL);
+
  /* Import TextModel from the textModel  */
 const { TextModel } = require('../../models/proj2/textModel');
 
@@ -50,40 +56,12 @@ exports.new = async (req, res) => {
         data = req.body;
     }
 
-    /* If the request is of type Array, we need to handle it differently
-        than if it were a single Object. */
-    if (data instanceof Array) {
-        for (let i = 0; i < data.length; i++) {
-            let element = data[i]; /* Reference to JSON content */
-            let text = new TextModel({ /* Create new document for current element */
-                title: element.title,
-                query: element.query,
-                label: element.label,
-            });
-            /* Save into DB */
-            text.save()
-                .catch((err) => {
-                    console.log(err);
-                    return res.redirect('../errors');
-                });
-        }
-        /* Resolve response */
-        return res.redirect('../datasets/proj2');
-    } else {
-        let text = new TextModel({
-            title: data.title,
-            query: data.query,
-            label: data.label,
-        });
-        /* TODO: Add error handling for POST and GET requests, as well as duplicate entries */
-        text.save()
-            .then((user) => {
-                //return res.send({message:"Success!"});
-                return res.redirect('../datasets/proj2');
-            })
-            .catch((err) => {
-                console.log(err);
-                return res.redirect('../errors');
-            });
-    }
+    /* Queue job to background Node.js process */
+    let job = await workQueue.add({
+        data: data,                     // Data to post
+        collection: "text-query-data",  // Collection to post to 
+    });
+
+    /* Then, we return a response to prevent Heroku's request timeout after 30 secs. */
+    res.json({message: `processing job ${job.id}`}).end();
 }
