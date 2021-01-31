@@ -64,7 +64,7 @@ router.get('/job/:id', async (req, res) => {
     } else {
         let state = await job.getState();
         let progress = job._progress;
-        let reason = job.failedReason();
+        let reason = job.failedReason;
         res.json({
             id,
             state,
