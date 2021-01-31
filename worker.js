@@ -39,6 +39,7 @@ function start() {
         const collection = db.collection("text-query-data");
         //console.log(job.data.data);
         let data = job.data.content;
+        console.log(data);
         /* If incoming request data is an array, process it like so */
         if (job.data instanceof Array) {
             for (let i = 0; i < job.data.length; i++) {
