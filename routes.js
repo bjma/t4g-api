@@ -7,6 +7,12 @@
 const express = require('express');
 const router = express.Router();
 
+/* Define a queue for processing background jobs */
+const Queue = require("bull");
+const REDIS_URL = process.env.REDIS_URL;
+
+let workQueue = new Queue("work", REDIS_URL);
+
 /* Default API response */
 router.get('/', (req, res) => {
     res.json({
@@ -46,6 +52,26 @@ router.get('/errors', (req, res) => {
         status: "ERROR",
         message: "Oops! Something went wrong, probably a bad request."
     });
+});
+
+/* Router to query job states */
+router.get('/job/:id', async (req, res) => {
+    let id = req.params.id;
+    let job = await workQueue.getJob(id);
+
+    if (job === null) {
+        res.status(404).end();
+    } else {
+        let state = await job.getState();
+        let progress = job._progress;
+        let reason = job.failedReason();
+        res.json({
+            id,
+            state,
+            progress,
+            reason
+        });
+    }
 });
 
 /* Export routes to other files */
