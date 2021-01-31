@@ -37,9 +37,10 @@ function start() {
         const db = client.db(dbName);
         //const collection = db.collection(job.collection);
         const collection = db.collection("text-query-data");
+        console.log(job.data);
 
         /* If incoming request data is an array, process it like so */
-        if (job.data instanceof Array) {
+        /*if (job.data instanceof Array) {
             for (let i = 0; i < job.data.length; i++) {
                 let document = {
                     title: job.data[i].title, // This is hard coded, can be optimized later :/
@@ -55,7 +56,7 @@ function start() {
                 label: job.data.label,
             }
             await collection.insertOne(document);
-        }
+        }*/
         //done(null, { done: job.data }); // Finish process
     });
 }
