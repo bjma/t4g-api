@@ -56,7 +56,7 @@ function start() {
             }
             await collection.insertOne(document);
         }
-        done(null, { done: job.data }); // Finish process
+        //done(null, { done: job.data }); // Finish process
     });
 }
 
