@@ -34,7 +34,8 @@ function start() {
             console.log(err);
         }
         const db = client.db(dbName);
-        const collection = db.collection(job.collection);
+        //const collection = db.collection(job.collection);
+        const collection = db.collection("text-query-data");
 
         let data = job.data;
         console.log(data);
