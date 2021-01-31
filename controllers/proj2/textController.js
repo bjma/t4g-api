@@ -5,7 +5,7 @@
  * handles requests and defines API endpoints.
  */
 
- /* Define a queue for processing background jobs */
+/* Define a queue for processing background jobs */
 const Queue = require("bull");
 const REDIS_URL = process.env.REDIS_URL;
 
@@ -66,3 +66,8 @@ exports.new = async (req, res) => {
     /* Then, we return a response to prevent Heroku's request timeout after 30 secs. */
     res.json({message: `processing job ${job.id}`}).end();
 }
+
+// Listen to global events to get notified when jobs are processed
+workQueue.on('global:completed', (jobId, result) => {
+  console.log(`Job completed with result ${result}`);
+});
