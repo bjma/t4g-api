@@ -24,6 +24,7 @@ const maxJobsPerWorker = 50;
 function start() {
     /* Connect to named work queue */
     let workQueue = new Queue("work", REDIS_URL);  
+    let progress = 0;
     /* Process queued jobs */
     workQueue.process(maxJobsPerWorker, async (job) => {
         /* Connect to MongoDB instance */
