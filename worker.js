@@ -39,7 +39,7 @@ function start() {
         const collection = db.collection("text-query-data");
         //console.log(job.data.data);
         let data = job.data.content;
-        console.log(data);
+        //console.log(data);
         /* If incoming request data is an array, process it like so */
         if (job.data instanceof Array) {
             for (let i = 0; i < job.data.length; i++) {
@@ -48,7 +48,8 @@ function start() {
                     query: data[i].query,
                     label: data[i].label,
                 };
-                await collection.insertOne(document); 
+                console.log(document);
+                //await collection.insertOne(document); 
             }
         } else { // Case for single document being uploaded
             let document = {
@@ -56,7 +57,7 @@ function start() {
                 query: data.query,
                 label: data.label,
             }
-            await collection.insertOne(document);
+            //await collection.insertOne(document);
         }
         //done(null, { done: job.data }); // Finish process
     });
