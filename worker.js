@@ -37,7 +37,7 @@ function start() {
         const db = client.db(dbName);
         //const collection = db.collection(job.collection);
         const collection = db.collection("text-query-data");
-        console.log(job.data);
+        console.log(job.data.data);
 
         /* If incoming request data is an array, process it like so */
         /*if (job.data instanceof Array) {
