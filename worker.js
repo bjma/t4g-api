@@ -6,6 +6,7 @@ const throng = require("throng");
 const Queue = require("bull");
 
 const { MongoClient } = require("mongodb");
+const { deleteOne } = require("./models/proj1/imageModel");
 
 /* Setup MongoDB instance */
 const uri = process.env.MONGODB_URI;
@@ -58,6 +59,7 @@ function start() {
             }
             await collection.insertOne(document);
         }
+        done(); // Finish process
     });
 }
 
