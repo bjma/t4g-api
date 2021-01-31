@@ -59,7 +59,7 @@ exports.new = async (req, res) => {
 
     /* Queue job to background Node.js process */
     let job = await workQueue.add({
-        data: data,                     // Data to post
+        content: data,                     // Data to post
         collection: "text-query-data",  // Collection to post to 
     });
 
@@ -70,4 +70,5 @@ exports.new = async (req, res) => {
 // Listen to global events to get notified when jobs are processed
 workQueue.on('global:completed', (jobId, result) => {
   console.log(`Job completed with result ${result}`);
+
 });

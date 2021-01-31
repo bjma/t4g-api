@@ -37,26 +37,26 @@ function start() {
         const db = client.db(dbName);
         //const collection = db.collection(job.collection);
         const collection = db.collection("text-query-data");
-        console.log(job.data.data);
-
+        //console.log(job.data.data);
+        let data = job.data.content;
         /* If incoming request data is an array, process it like so */
-        /*if (job.data instanceof Array) {
+        if (job.data instanceof Array) {
             for (let i = 0; i < job.data.length; i++) {
                 let document = {
-                    title: job.data[i].title, // This is hard coded, can be optimized later :/
-                    query: job.data[i].query,
-                    label: job.data[i].label,
+                    title: data[i].title, // This is hard coded, can be optimized later :/
+                    query: data[i].query,
+                    label: data[i].label,
                 };
                 await collection.insertOne(document); 
             }
         } else { // Case for single document being uploaded
             let document = {
-                title: job.data.title,
-                query: job.data.query,
-                label: job.data.label,
+                title: data.title,
+                query: data.query,
+                label: data.label,
             }
             await collection.insertOne(document);
-        }*/
+        }
         //done(null, { done: job.data }); // Finish process
     });
 }
