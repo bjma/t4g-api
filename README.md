@@ -43,7 +43,13 @@ Making a `POST` request is a bit more complicated, as you'd need a REST client i
 ## Endpoints
 * NLP Dataset for Text Classification (Project 2)
     * [GET](https://t4g-dl-api.herokuapp.com/api/datasets/proj2)
+    ```
+    https://t4g-dl-api.herokuapp.com/api/datasets/proj2
+    ```
     * [POST](https://t4g-dl-api.herokuapp.com/api/post/proj2)
+    ```
+    https://t4g-dl-api.herokuapp.com/api/post/proj2
+    ```
 
 ## Errors
 > This stub still needs to be completed.
