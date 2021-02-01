@@ -34,13 +34,11 @@ function start() {
             console.log(err);
         }
         const db = client.db(dbName);
-        //const collection = db.collection(job.collection);
-        const collection = db.collection("text-query-data");
-        //console.log(job.data.data);
+        const collection = db.collection(job.data.collection);
         let data = job.data.content;
-        //console.log(data);
+
         /* If incoming request data is an array, process it like so */
-        /*if (data instanceof Array) {
+        if (data instanceof Array) {
             for (let i = 0; i < job.data.length; i++) {
                 let document = {
                     title: data[i].title, // This is hard coded, can be optimized later :/
@@ -59,15 +57,7 @@ function start() {
             await collection.insertOne(document);
         }
         //done(null, { done: job.data }); // Finish process
-        done();*/
-        for (let i = 0; i < data.length; i++) {
-            let document = {
-                title: data[i].title,
-                query: data[i].query,
-                label: data[i].label
-            };
-            console.log(document);
-        }
+        return Promise.resolve(); // I think this should fix our issue 
     });
 }
 
