@@ -4,14 +4,10 @@
  * Contains all endpoints that our API offers.
  * Each route support their listed methods.
  */
+
+ /* Modules */
 const express = require('express');
 const router = express.Router();
-
-/* Define a queue for processing background jobs */
-const Queue = require("bull");
-const REDIS_URL = process.env.REDIS_URL;
-
-let workQueue = new Queue("work", REDIS_URL);
 
 /* Default API response */
 router.get('/', (req, res) => {
@@ -24,8 +20,11 @@ router.get('/', (req, res) => {
 /* Routes to image datasets for Project 1 */
 const imageController = require('./controllers/proj1/imageController');
 router.route('/datasets/proj1')
-    .get(imageController.index)
-    .post(imageController.new);
+    .get((req, res) => {
+        res.json({
+            message: "This endpoint is deprecated."
+        });
+    });
 
 /* Routes to text dataset for Project 2 */ 
 const textController = require('./controllers/proj2/textController');
@@ -52,26 +51,6 @@ router.get('/errors', (req, res) => {
         status: "ERROR",
         message: "Oops! Something went wrong, probably a bad request."
     });
-});
-
-/* Router to query job states */
-router.get('/job/:id', async (req, res) => {
-    let id = req.params.id;
-    let job = await workQueue.getJob(id);
-
-    if (job === null) {
-        res.status(404).end();
-    } else {
-        let state = await job.getState();
-        let progress = job._progress;
-        let reason = job.failedReason;
-        res.json({
-            id,
-            state,
-            progress,
-            reason
-        });
-    }
 });
 
 /* Export routes to other files */

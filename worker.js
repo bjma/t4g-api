@@ -1,7 +1,17 @@
 /**
+ * Filename: worker.js
+ * 
  * Worker process that handles network expensive requests
- * in the background.
+ * in the background. This is so that we won't stall the
+ * web process itself when processing a request. 
+ * 
+ * Instead, a request is added to a job queue (FCFS implementation),
+ * and all information within that job is cached using Redis. This way,
+ * the server can handle multiple jobs in the background while the web dyno
+ * listens for new requests.
  */
+
+/* Modules */
 const throng = require("throng");
 const Queue = require("bull");
 
@@ -15,16 +25,15 @@ const dbName = 'datasets';
 /* Connect to Heroku provided URL for Redis */
 const REDIS_URL = process.env.REDIS_URL;
 
-/* Create multiple processes to handle jobs; basically concurrency in OS */
+/* Create multiple processes to handle jobs */
 let workers = process.env.WEB_CONCURRENCY;
 
-/* Maximum number of jobs a worker should process at once */
+/* Maximum number of jobs a worker should process */
 const maxJobsPerWorker = 50;
 
 function start() {
     /* Connect to named work queue */
-    let workQueue = new Queue("work", REDIS_URL);  
-    let progress = 0;
+    let workQueue = new Queue("work", REDIS_URL);
     /* Process queued jobs */
     workQueue.process(maxJobsPerWorker, async (job) => {
         /* Connect to MongoDB instance */

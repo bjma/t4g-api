@@ -40,16 +40,19 @@ exports.index = async (req, res) => {
 }
 
 /**
- * POST endpoint (THIS NEEDS TO BE TESTED THOROUGHLY);
- * Indexes a new entry in the database. Scalable implementation should be able
- * to handle duplicate exceptions.
+ * POST endpoint;
+ * Indexes a new entry in the database. Each POST request
+ * is added into a job queue, and the request data is cached using Redis.
+ * 
+ * Once the job is added to the queue, this endpoint returns a response
+ * to avoid crashing the app due to a timeout. It should be noted that
+ * Heroku will automatically timeout the application if a request 
+ * takes longer than 30 seconds to resolve.
  */
 exports.new = async (req, res) => {
     let data = {};
         
     /* Check if request is of type form */
-    // Just added since we don't know if form data is an array or single object
-    // be sure to test this if you see this comment :)
     if (typeof req.body.data != 'undefined') {
         try {
             data = await JSON.parse(req.body.data);

@@ -1,18 +1,25 @@
 /**
  * Filename: index.js
- * The crux of our API; it defines all the libraries we use,
- * as well as handles most of the initialization for our API.
  * 
- * There isn't much to be done here.
+ * The crux of our API; it defines all the libraries we use,
+ * as well as handles most of the initialization for our server.
  */
+
+ /* Modules */
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
+/* API instance */
 const app = express(); 
 
-/* Middleware for the API */
+/** 
+ * Middleware for the API;
+ * Make sure to maintain this order when adding new ones;
+ * CORS should be the first one to be instantiated, then 
+ * the bodyParser middlewares. 
+ */ 
 app.use(cors({origin: '*'}));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false })); /* Parse x-www-form-urlencoded */
@@ -21,7 +28,7 @@ app.use(express.json());
 /* HTML Rendering */
 app.set('view engine', 'ejs'); 
 
-/* Port that the server runs on; don't change this */
+/* Port that the server runs on; one is for production and other one for local testing. */
 const port = process.env.PORT || 3000;
 
 /* Database information */
