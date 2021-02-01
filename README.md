@@ -1,56 +1,37 @@
 # Tech4Good Deep Learning API
-Pretty simple RESTful API made for Tech4Good's deep learning team. Does the basic CRUD operations (still need to finish) and follows MVC structure.
+
+When building and training machine learning models distributed amongst a team, it's important to ensure that there is consistency in the datasets in use. The **Tech4Good Deep Learning API** allows you to retrieve and send *real-time* data with low latency to be used to train your machine learning models.
+
+The API follows basic [REST](https://www.redhat.com/en/topics/api/what-is-a-rest-api) guidelines and [MVC](https://www.tutorialsteacher.com/mvc/mvc-architecture) structure, built with [Node.js](https://nodejs.org/en/about/).
+
+## Dependencies and Stack
+The API is primarily developed using *Node.js*, a back-end JavaScript runtime environment that helps build powerful web applications. We used [Express](https://expressjs.com/) for handling API endpoints and methods, [Redis](https://redis.io/topics/introduction) for server caching, and [Bull](https://github.com/OptimalBits/bull/) for managing queues of background jobs. Additionally, we use the [MongoDB](https://mongodb.github.io/node-mongodb-native/) native driver to connect and communicate with our database.
+
+## HTTP Requests
+The API is defined by a set of [endpoints](##Endpoints), and at each endpoint, you can make an HTTP request from there.
+
+The API supports two main HTTP requests: `GET` and `POST`. To retrieve datasets using the API, we would make a `GET` request to one of the endpoints in the `/api/datasets/` route. To make a `POST` request (i.e. when we're doing data collection), we would go to the `/api/post/` routes.
+
+### Making a GET request
+Making a `GET` request is pretty simple. One option is to directly visit the endpoint URL, where the data is returned in JSON format. We can also make a `GET` request from the command line, using `cURL`:
+
+```bash
+curl "https://t4g-dl-api.herokuapp.com/api/datasets/:{endpoint}"
+```
+
+The command line would then respond with a JSON containing the dataset requested by the specific endpoint. Alternatively, you could retrieve data using the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) in JavaScript, or the [requests](https://pypi.org/project/requests/) in Python. You can refer to sample code [here](##Examples).
+
+### Making a POST request
+Making a `POST` request is a bit more complicated, as you'd need a REST client if you wanted to simply "upload" your collected data to the database. You could alternatively write a Python script with `pymongo` or use `cURL`, but for the sake of your sanity, we have a frontend client (located at route `/api/post/`) for your data `POST`ing needs. Simply copy and paste content from your JSON file and click "submit", and you should be redirected to the `GET` endpoint for specific dataset you're uploading to!
 
 ## Endpoints
-The API currently only supports the endpoint to the dataset used for our image classification project. As we continue with the NLP project, I'll be tweaking this API to handle endpoints for that.
+* NLP Dataset for Text Classification (Project 2)
+    * [GET](https://t4g-dl-api.herokuapp.com/api/datasets/proj2)
+    * [POST](https://t4g-dl-api.herokuapp.com/api/post/proj2)
 
-### Web Component Image Classifier (Project 1)
-This endpoint gets you the entire dataset of web component images as an array consiting of each image in our dataset, with information like features and byte data. The endpoint for this specific project dataset is found below, which can be accessed using the `requests` library in Python:
-``` python
-import requests
-import json
+## Errors
+> This stub still needs to be completed.
 
-# HTTP endpoint to the API; note the specific route we're using
-API_ENDPOINT = "https://t4g-dl-api.herokuapp.com/api/proj1/dataset"
-# Fetch the response from the endpoint using Python's request library
-res = requests.get(API_ENDPOINT)
-# Print the response as a JSON object (can be converted to Pandas dataframe)
-print(res.json())
-```
-
-It returns each image in `JSON` format, shown below:
-``` json
-{
-    "_id": {
-        "type": "int",
-        "description": "Unique ID"
-    },
-    "name": {
-        "type": "String",
-        "description": "Filename of image"
-    },
-    "byteData": {
-        "type": "base64 String",
-        "description": "Byte data of image"
-    },
-    "features": {
-        "text": {
-            "type": "integer",
-            "description": "One-hot encoding for text feature"
-        },
-        "shape": {
-            "type": "integer",
-            "description": "One-hot encoding for shape feature"
-        },
-        "icon": {
-            "type": "integer",
-            "description": "One-hot encoding for icon feature"
-        },
-        "relativePositioning": {
-            "type": "integer",
-            "description": "One-hot encoding for relativePositioning feature"    
-        },
-    }
-}
-```
+## Examples
+> This stub still needs to be completed.
 
