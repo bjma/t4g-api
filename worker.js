@@ -39,11 +39,11 @@ function start() {
 
         /* If incoming request data is an array, process it like so */
         if (data instanceof Array) {
-            console.log("Received the following data: ", data);
-            //await collection.insertMany(data);
+            console.log("Received the following documents: ", data);
+            await collection.insertMany(data);
         } else { // Case for single document being uploaded
-            console.log("Received the following data: ", data);
-            //await collection.insertOne(data);
+            console.log("Received the following document: ", data);
+            await collection.insertOne(data);
         }
         return Promise.resolve(); // I think this should fix our issue 
     });
