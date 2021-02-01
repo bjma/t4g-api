@@ -64,15 +64,9 @@ exports.new = async (req, res) => {
     /* Queue job to background Node.js process */
     let job = await workQueue.add({
         content: data,                     // Data to post
-        collection: "text-query-data",  // Collection to post to 
+        collection: "text-query-data",     // Collection to post to 
     });
 
     /* Then, we return a response to prevent Heroku's request timeout after 30 secs. */
-    res.json({message: `processing job ${job.id}`}).end();
+    res.redirect('../datasets/proj2').end();
 }
-
-// Listen to global events to get notified when jobs are processed
-workQueue.on('global:completed', (jobId, result) => {
-  console.log(`Job completed with result ${result}`);
-
-});
