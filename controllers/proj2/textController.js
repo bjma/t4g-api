@@ -52,7 +52,7 @@ exports.new = async (req, res) => {
     // be sure to test this if you see this comment :)
     if (typeof req.body.data != 'undefined') {
         try {
-            data = JSON.parse(req.body.data);
+            data = await JSON.parse(req.body.data);
         } catch (err) {
             console.log(err);
             return res.redirect('../errors');
