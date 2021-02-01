@@ -39,24 +39,12 @@ function start() {
 
         /* If incoming request data is an array, process it like so */
         if (data instanceof Array) {
-            for (let i = 0; i < job.data.length; i++) {
-                let document = {
-                    title: data[i].title, // This is hard coded, can be optimized later :/
-                    query: data[i].query,
-                    label: data[i].label,
-                };
-                console.log(document); // this is null for some reason
-                await collection.insertOne(document); 
-            }
+            console.log("Received the following data: ", data);
+            //await collection.insertMany(data);
         } else { // Case for single document being uploaded
-            let document = {
-                title: data.title,
-                query: data.query,
-                label: data.label,
-            }
-            await collection.insertOne(document);
+            console.log("Received the following data: ", data);
+            //await collection.insertOne(data);
         }
-        //done(null, { done: job.data }); // Finish process
         return Promise.resolve(); // I think this should fix our issue 
     });
 }
