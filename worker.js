@@ -35,17 +35,19 @@ function start() {
         }
         const db = client.db(dbName);
         const collection = db.collection(job.data.collection);
+
+        /* Get data to save into database from job */
         let data = job.data.content;
 
-        /* If incoming request data is an array, process it like so */
-        if (data instanceof Array) {
+        if (data instanceof Array) { // Case for multiple documents being uploaded
             console.log("Received the following documents: ", data);
             await collection.insertMany(data);
         } else { // Case for single document being uploaded
             console.log("Received the following document: ", data);
             await collection.insertOne(data);
         }
-        return Promise.resolve(); // I think this should fix our issue 
+        /* Signal that we've resolved the promise */
+        return Promise.resolve(); 
     });
 }
 
