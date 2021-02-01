@@ -8,7 +8,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const fs = require('fs');
 const bodyParser = require('body-parser');
 
 const app = express(); 
@@ -38,19 +37,7 @@ connection.once('open', () => {
     const routes = require('./routes');
     app.use('/api', routes);
 
-    const server = app.listen(port, () => {
+    app.listen(port, () => {
         console.log(`API currently running on port ${port}`);
     });
-    /**
-     * TODO: Create background dyno in Heroku for requests that take a long time
-     * to resolve. This way, we can send a response before the timeout occurs,
-     * while asynchronously handling requests in the background.
-     * 
-     * Stuff to read:
-     * 1. https://devcenter.heroku.com/articles/background-jobs-queueing
-     * 2. https://stackoverflow.com/questions/64851732/how-to-avoid-request-timeout-on-heroku
-     * 3. https://devcenter.heroku.com/articles/request-timeout
-     * 4. https://www.heroku.com/dynos
-     * 5. https://www.heroku.com/dynos/configure
-     */
 });
