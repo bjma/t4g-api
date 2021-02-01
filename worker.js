@@ -41,15 +41,15 @@ function start() {
         let data = job.data.content;
         //console.log(data);
         /* If incoming request data is an array, process it like so */
-        if (job.data instanceof Array) {
+        if (data instanceof Array) {
             for (let i = 0; i < job.data.length; i++) {
                 let document = {
                     title: data[i].title, // This is hard coded, can be optimized later :/
                     query: data[i].query,
                     label: data[i].label,
                 };
-                console.log(document);
-                //await collection.insertOne(document); 
+                console.log(document); // this is null for some reason
+                await collection.insertOne(document); 
             }
         } else { // Case for single document being uploaded
             let document = {
@@ -57,7 +57,7 @@ function start() {
                 query: data.query,
                 label: data.label,
             }
-            //await collection.insertOne(document);
+            await collection.insertOne(document);
         }
         //done(null, { done: job.data }); // Finish process
     });
