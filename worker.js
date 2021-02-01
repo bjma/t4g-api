@@ -6,7 +6,6 @@ const throng = require("throng");
 const Queue = require("bull");
 
 const { MongoClient } = require("mongodb");
-const { deleteOne } = require("./models/proj1/imageModel");
 
 /* Setup MongoDB instance */
 const uri = process.env.MONGODB_URI;
@@ -41,7 +40,7 @@ function start() {
         let data = job.data.content;
         //console.log(data);
         /* If incoming request data is an array, process it like so */
-        if (data instanceof Array) {
+        /*if (data instanceof Array) {
             for (let i = 0; i < job.data.length; i++) {
                 let document = {
                     title: data[i].title, // This is hard coded, can be optimized later :/
@@ -60,6 +59,10 @@ function start() {
             await collection.insertOne(document);
         }
         //done(null, { done: job.data }); // Finish process
+        done();*/
+        for (let i = 0; i < data.length; i++) {
+            console.log(data[i]);
+        }
     });
 }
 
