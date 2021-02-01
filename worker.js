@@ -60,9 +60,13 @@ function start() {
         }
         //done(null, { done: job.data }); // Finish process
         done();*/
-        console.log(data instanceof Array);
         for (let i = 0; i < data.length; i++) {
-            //console.log(data[i]);
+            let document = {
+                title: data[i].title,
+                query: data[i].query,
+                label: data[i].label
+            };
+            console.log(document);
         }
     });
 }
