@@ -9,7 +9,11 @@
 const Queue = require("bull");
 const REDIS_URL = process.env.REDIS_URL;
 
-let workQueue = new Queue("work", REDIS_URL);
+let workQueue = new Queue("work", REDIS_URL, {
+    defaultJobOptions: { 
+        removeOnComplete: true,
+        removeOnFailed: true }
+});
 
  /* Import TextModel from the textModel  */
 const { TextModel } = require('../../models/proj2/textModel');
