@@ -24,7 +24,7 @@ We define each route, or a set of endpoints, in `routes.js`. The `server.js` fil
 Since we deal with an intense amount of requests (especially for uploading data to the database), we use Redis to cache request data and queue it into a *work queue* with Bull. This way, we can process network intensive jobs in the background, while the web app continues to listen to requests. All the work is done in `worker.js`. To read more, brush up on OS concepts like concurrency strategies for threads.
 
 ## HTTP Requests
-The API is defined by a set of [endpoints](##Endpoints), and at each endpoint, you can make an HTTP request from there.
+The API is defined by a set of [endpoints](##endpoints), and at each endpoint, you can make an HTTP request from there.
 
 The API supports two main HTTP requests: `GET` and `POST`. To retrieve datasets using the API, we would make a `GET` request to one of the endpoints in the `/api/datasets/` route. To make a `POST` request (i.e. when we're doing data collection), we would go to the `/api/post/` routes.
 
@@ -35,7 +35,7 @@ Making a `GET` request is pretty simple. One option is to directly visit the end
 curl "https://t4g-dl-api.herokuapp.com/api/datasets/:{endpoint}"
 ```
 
-The command line would then respond with a JSON containing the dataset requested by the specific endpoint. Alternatively, you could retrieve data using the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) in JavaScript, or the [requests](https://pypi.org/project/requests/) in Python. You can refer to sample code [here](##Examples).
+The command line would then respond with a JSON containing the dataset requested by the specific endpoint. Alternatively, you could retrieve data using the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) in JavaScript, or the [requests](https://pypi.org/project/requests/) in Python. You can refer to sample code [here](##examples).
 
 ### Making a POST request
 Making a `POST` request is a bit more complicated, as you'd need a REST client if you wanted to simply "upload" your collected data to the database. You could alternatively write a Python script with `pymongo` or use `cURL`, but for the sake of your sanity, we have a frontend client (located at route `/api/post/`) for your data `POST`ing needs. Simply copy and paste content from your JSON file and click "submit", and you should be redirected to the `GET` endpoint for specific dataset you're uploading to!
