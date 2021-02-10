@@ -25,12 +25,22 @@ const { TextModel } = require('../../models/proj2/textModel');
 const validateDocument = async (data, res) => {
     if (data instanceof Array) {
         data.forEach(element => {
-            if (element.validateSync()) {
+            let TextDocument = new TextModel({
+                title: element.title,
+                query: element.query,
+                label: element.label
+            })
+            if (TextDocument.validateSync()) {
                 return res.redirect('../errors');
             }
         });
     } else {
-        if (data.validateSync()) {
+        let TextDocument = new TextModel({
+            title: data.title,
+            query: data.query,
+            label: data.label
+        })
+        if (TextDocument.validateSync()) {
             return res.redirect('../errors');
         }
     }
