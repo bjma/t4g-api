@@ -70,12 +70,12 @@ exports.new = async (req, res) => {
        This block is honestly really bad code but I don't really care as of now. */
     if (data instanceof Array) {
         data.forEach(element => {
-            if (typeof await element.validateSync() != 'undefined') {
+            if (await element.validateSync()) {
                 return res.redirect('../errors');
             }
         });
     } else {
-        if (typeof await data.validateSync()) {
+        if (await data.validateSync()) {
             return res.redirect('../errors');
         }
     }
