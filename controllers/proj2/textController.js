@@ -19,6 +19,25 @@ let workQueue = new Queue("work", REDIS_URL, {
 const { TextModel } = require('../../models/proj2/textModel');
 
 /**
+ * Helper function that validates document data according to TextModel.
+ * @param {Document} data  Document sent by requester
+ */
+const validateDocument = async (data, res) => {
+    if (data instanceof Array) {
+        data.forEach(element => {
+            if (element.validateSync()) {
+                return res.redirect('../errors');
+            }
+        });
+    } else {
+        if (data.validateSync()) {
+            return res.redirect('../errors');
+        }
+    }
+    console.log("success");
+}
+
+/**
  * GET endpoint;
  * Retrieves text data by sending a GET request to the database.
  */
@@ -65,20 +84,8 @@ exports.new = async (req, res) => {
     }
 
     /* Document validation using Mongoose; we have to do this before
-       we pass it to the work queue since Mongoose isn't compatible with BullJS.
-       
-       This block is honestly really bad code but I don't really care as of now. */
-    if (data instanceof Array) {
-        data.forEach(element => {
-            if (await element.validateSync()) {
-                return res.redirect('../errors');
-            }
-        });
-    } else {
-        if (await data.validateSync()) {
-            return res.redirect('../errors');
-        }
-    }
+       we pass it to the work queue since Mongoose isn't compatible with BullJS. */
+    await validateDocument(data);
 
     /* Queue job to background Node.js process */
     let job = await workQueue.add({
