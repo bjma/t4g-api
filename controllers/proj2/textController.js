@@ -64,6 +64,22 @@ exports.new = async (req, res) => {
         data = req.body;
     }
 
+    /* Document validation using Mongoose; we have to do this before
+       we pass it to the work queue since Mongoose isn't compatible with BullJS.
+       
+       This block is honestly really bad code but I don't really care as of now. */
+    if (data instanceof Array) {
+        data.forEach(element => {
+            if (typeof await element.validateSync() != 'undefined') {
+                return res.redirect('../errors');
+            }
+        });
+    } else {
+        if (typeof await data.validateSync()) {
+            return res.redirect('../errors');
+        }
+    }
+
     /* Queue job to background Node.js process */
     let job = await workQueue.add({
         content: data,                     // Data to post

@@ -7,11 +7,13 @@
 
  /* Modules */
 const express = require('express');
+
+/* API Middleware */
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-/* API instance */
+/* Server instance */
 const app = express(); 
 
 /** 
