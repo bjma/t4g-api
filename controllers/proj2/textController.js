@@ -104,5 +104,5 @@ exports.new = async (req, res) => {
     });
 
     /* Then, we return a response to prevent Heroku's request timeout after 30 secs. */
-    res.redirect('../datasets/proj2').end();
+    res.redirect('../datasets/proj2');
 }
