@@ -22,7 +22,7 @@ const { TextModel } = require('../../models/proj2/textModel');
  * Helper function that validates document data according to TextModel.
  * @param {Document} data  Document sent by requester
  */
-const validateDocument = async (data, res) => {
+const validateDocument = async (data) => {
     if (data instanceof Array) {
         data.forEach(element => {
             let TextDocument = new TextModel({
@@ -30,8 +30,9 @@ const validateDocument = async (data, res) => {
                 query: element.query,
                 label: element.label
             })
-            if (TextDocument.validateSync()) {
-                return res.redirect('../errors');
+            let error = TextDocument.validateSync();
+            if (error) {
+                return false;
             }
         });
     } else {
@@ -40,11 +41,13 @@ const validateDocument = async (data, res) => {
             query: data.query,
             label: data.label
         })
-        if (TextDocument.validateSync()) {
-            return res.redirect('../errors');
+        let error = TextDocument.validateSync();
+        if (error) {
+            return false;
         }
     }
     console.log("success");
+    return true;
 }
 
 /**
@@ -95,14 +98,17 @@ exports.new = async (req, res) => {
 
     /* Document validation using Mongoose; we have to do this before
        we pass it to the work queue since Mongoose isn't compatible with BullJS. */
-    await validateDocument(data);
+    let validationPassed = await validateDocument(data);
+    if (!validationPassed) {
+        return res.redirect('../errors');
+    } else {
+        /* Queue job to background Node.js process */
+        let job = await workQueue.add({
+            content: data,                     // Data to post
+            collection: "text-query-data",     // Collection to post to 
+        });
 
-    /* Queue job to background Node.js process */
-    let job = await workQueue.add({
-        content: data,                     // Data to post
-        collection: "text-query-data",     // Collection to post to 
-    });
-
-    /* Then, we return a response to prevent Heroku's request timeout after 30 secs. */
-    res.redirect('../datasets/proj2');
+        /* Then, we return a response to prevent Heroku's request timeout after 30 secs. */
+        return res.redirect('../datasets/proj2');
+    }
 }
