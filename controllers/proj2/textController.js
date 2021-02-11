@@ -87,7 +87,7 @@ exports.new = async (req, res) => {
             data = await JSON.parse(req.body.data);
         } catch (err) {
             console.log(err);
-            return res.redirect('../errors');
+            return res.redirect('../../errors');
         }
     } else {
         data = req.body;
@@ -97,15 +97,15 @@ exports.new = async (req, res) => {
        we pass it to the work queue since Mongoose isn't compatible with BullJS. */
     let validationPassed = await preemptValidation(data);
     if (!validationPassed) {
-        return res.redirect('../errors');
-    } else {
-        /* Queue job to background Node.js process */
-        let job = await workQueue.add({
-            content: data,                     // Data to post
-            collection: "text-query-data",     // Collection to post to 
-        });
-
-        /* Then, we return a response to prevent Heroku's request timeout after 30 secs. */
-        return res.redirect('../datasets/proj2');
+        return res.redirect('../../errors');
     }
+    /* Queue job to background Node.js process */
+    let job = await workQueue.add({
+        content: data,                     // Data to post
+        collection: "text-query-data",     // Collection to post to 
+    });
+
+    /* Then, we return a response to prevent Heroku's request timeout after 30 secs. */
+    return res.redirect('../datasets/proj2');
+    
 }
