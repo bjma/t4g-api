@@ -19,30 +19,26 @@ let workQueue = new Queue("work", REDIS_URL, {
 const { TextModel } = require('../../models/proj2/textModel');
 
 /**
- * Helper function that validates document data according to TextModel.
- * @param {Document} data  Document sent by requester
+ * Helper function that validates document data
+ * @param {Document} data  
  */
-const validateDocument = async (data) => {
+const isValid = (data) => {
+    return (data.title instanceof Array) && (data.query instanceof Array) && (data.label instanceof String);
+}
+
+ /**
+  * Preemption for validating documents sent by request
+  * @param {*} data Document sent by requester
+  */
+const responsePreemption = async (data) => {
     if (data instanceof Array) {
         data.forEach(element => {
-            let TextDocument = new TextModel({
-                title: element.title,
-                query: element.query,
-                label: element.label
-            })
-            let error = TextDocument.validateSync();
-            if (error) {
+            if (!isValid(element)) {
                 return false;
             }
         });
     } else {
-        let TextDocument = new TextModel({
-            title: data.title,
-            query: data.query,
-            label: data.label
-        })
-        let error = TextDocument.validateSync();
-        if (error) {
+        if (!isValid(data)) {
             return false;
         }
     }
