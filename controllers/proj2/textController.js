@@ -23,7 +23,7 @@ const { TextModel } = require('../../models/proj2/textModel');
  * @param {Document} data  
  */
 const isValid = (data) => {
-    return (Array.isArray(data.title)) && (Array.isArray(data.query)) && (data.label instanceof String);
+    return (Array.isArray(data.title)) && (Array.isArray(data.query)) && (data.label && typeof data.label === 'string');
 }
 
  /**
@@ -31,7 +31,7 @@ const isValid = (data) => {
   * @param {*} data Document sent by requester
   */
 const preemptValidation = async (data) => {
-    console.log(Array.isArray(data.title), Array.isArray(data.query), data.label instanceof String);
+    console.log(Array.isArray(data.title), Array.isArray(data.query), data.label && typeof data.label === 'string');
     if (data instanceof Array) {
         data.forEach(element => {
             if (!isValid(element)) {
