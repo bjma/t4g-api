@@ -23,7 +23,7 @@ const { TextModel } = require('../../models/proj2/textModel');
  * @param {Document} data  
  */
 const isValid = (data) => {
-    return (data.title instanceof Array) && (data.query instanceof Array) && (data.label instanceof String);
+    return (Array.isArray(data.title)) && (Array.isArray(data.query)) && (data.label instanceof String);
 }
 
  /**
@@ -31,7 +31,7 @@ const isValid = (data) => {
   * @param {*} data Document sent by requester
   */
 const preemptValidation = async (data) => {
-    console.log(typeof data.title, typeof data.query, typeof data.label);
+    console.log(Array.isArray(data.title), Array.isArray(data.query), typeof data.label);
     if (data instanceof Array) {
         data.forEach(element => {
             if (!isValid(element)) {
@@ -87,7 +87,7 @@ exports.new = async (req, res) => {
             data = await JSON.parse(req.body.data);
         } catch (err) {
             console.log(err);
-            return res.redirect('../../errors');
+            return res.redirect('../errors');
         }
     } else {
         data = req.body;
@@ -97,7 +97,7 @@ exports.new = async (req, res) => {
        we pass it to the work queue since Mongoose isn't compatible with BullJS. */
     let validationPassed = await preemptValidation(data);
     if (!validationPassed) {
-        return res.redirect('../../errors');
+        return res.redirect('../errors');
     }
     /* Queue job to background Node.js process */
     let job = await workQueue.add({
