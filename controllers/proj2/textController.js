@@ -31,7 +31,6 @@ const isValid = (data) => {
   * @param {*} data Document sent by requester
   */
 const preemptValidation = async (data) => {
-    console.log(Array.isArray(data.title), Array.isArray(data.query), data.label && typeof data.label === 'string');
     if (data instanceof Array) {
         data.forEach(element => {
             if (!isValid(element)) {
