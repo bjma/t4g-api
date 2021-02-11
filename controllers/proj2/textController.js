@@ -30,7 +30,7 @@ const isValid = (data) => {
   * Preemption for validating documents sent by request
   * @param {*} data Document sent by requester
   */
-const validationPassed = async (data) => {
+const preemptValidation = async (data) => {
     if (data instanceof Array) {
         data.forEach(element => {
             if (!isValid(element)) {
@@ -94,7 +94,8 @@ exports.new = async (req, res) => {
 
     /* Document validation using Mongoose; we have to do this before
        we pass it to the work queue since Mongoose isn't compatible with BullJS. */
-    if (!validationPassed(data)) {
+    let validationPassed = await preemptValidation(data);
+    if (!validationPassed) {
         return res.redirect('../errors');
     } else {
         /* Queue job to background Node.js process */
