@@ -9,17 +9,28 @@
 const Queue = require("bull");
 const REDIS_URL = process.env.REDIS_URL;
 
+/**
+ * Definition of a first-come-first-serve (FCFS) job queue for processing requests;
+ * The server uses Redis to cache a request's information and stores it to this queue, and
+ * then returns an HTTP response. Heroku worker dynos takes each task from the queue
+ * and resolves each request in a background NodeJS process (see `workers.js`).
+ */
 let workQueue = new Queue("work", REDIS_URL, {
     defaultJobOptions: { 
         removeOnComplete: true,
         removeOnFailed: true }
 });
 
- /* Import TextModel from the textModel  */
+ /* Mongoose Document Validation (currently not in use)  */
 const { TextModel } = require('../../models/proj2/textModel');
 
 /**
- * Helper function that validates document data
+ * Validates document sent via POST request against defined DB schema.
+ * 
+ * NOTE: The DB schema has not actually been implemented yet. Previously, Mongoose was used
+ * for document validation, but it's not compatible with BullJS, which is what we use for processing
+ * concurrent requests.
+ * 
  * @param {Document} data  
  */
 const isValid = (data) => {
@@ -80,15 +91,23 @@ exports.index = async (req, res) => {
 exports.new = async (req, res) => {
     let data = {};
         
-    /* Check if request is of type form */
-    if (typeof req.body.data != 'undefined') {
+    /**
+     * There are two ways we can recieve/make a POST request: 
+     * 1. REST Client
+     *      - This could be something like Postman, or even cURL
+     * 2. Front-end client
+     *      - The T4G DL API has a front-end client that sends post requests as form data. 
+     *        If we see that a request's body contains the field "data", 
+     *        we know that it was sent as a form, not from a REST client. 
+     */
+    if (typeof req.body.data != 'undefined') { // Front-end client
         try {
             data = await JSON.parse(req.body.data);
         } catch (err) {
             console.log(err);
             return res.redirect('../errors');
         }
-    } else {
+    } else {                                   // Anything else
         data = req.body;
     }
 
@@ -104,7 +123,8 @@ exports.new = async (req, res) => {
         collection: "text-query-data",     // Collection to post to 
     });
 
-    /* Then, we return a response to prevent Heroku's request timeout after 30 secs. */
+    /* Then, we return a response to prevent Heroku's request timeout after 30 secs.
+       Conceptually, this also allows our server to simultaneously listen for multiple HTTP requests
+       and resolve other HTTP requests in the background. */
     return res.redirect('../datasets/proj2');
-    
 }
