@@ -2,19 +2,19 @@
  * Filename: worker.js
  * 
  * Worker process that handles network expensive requests
- * in the background. This is so that we won't stall the
- * web process itself when processing a request. 
+ * in the background, while the server itself is allowed
+ * to listen for new, incoming requests. 
  * 
- * Instead, a request is added to a job queue (FCFS implementation),
- * and all information within that job is cached using Redis. This way,
- * the server can handle multiple jobs in the background while the web dyno
- * listens for new requests.
+ * This is so that we won't stall the web process (server) itself 
+ * when processing a network expensive request. 
+ * 
+ * A request is added to a FCFS scheduler (see definition in `controllers/proj2/textController.js`),
+ * and all information within that job is cached using Redis.
  */
 
 /* Modules */
 const throng = require("throng");
 const Queue = require("bull");
-
 const { MongoClient } = require("mongodb");
 
 /* Setup MongoDB instance */
@@ -32,8 +32,11 @@ let workers = process.env.WEB_CONCURRENCY;
 const maxJobsPerWorker = 50;
 
 function start() {
-    /* Connect to named work queue */
+    /* Connect to named work queue. 
+       We can have each controller define its specific work queue,
+       and have the specific work queue's name globally passed to `worker.js` */
     let workQueue = new Queue("work", REDIS_URL);
+
     /* Process queued jobs */
     workQueue.process(maxJobsPerWorker, async (job) => {
         /* Connect to MongoDB instance */
@@ -42,10 +45,11 @@ function start() {
         } catch (err) {
             console.log(err);
         }
+        /* DB information */
         const db = client.db(dbName);
         const collection = db.collection(job.data.collection);
 
-        /* Get data to save into database from job */
+        /* Get cached request data from job information */
         let data = job.data.content;
 
         if (data instanceof Array) { // Case for multiple documents being uploaded
