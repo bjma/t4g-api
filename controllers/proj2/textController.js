@@ -14,6 +14,8 @@ const REDIS_URL = process.env.REDIS_URL;
  * The server uses Redis to cache a request's information and stores it to this queue, and
  * then returns an HTTP response. Heroku worker dynos takes each task from the queue
  * and resolves each request in a background NodeJS process (see `workers.js`).
+ * 
+ * Might want to move this to a file where every other file can access it globally.
  */
 let workQueue = new Queue("work", REDIS_URL, {
     defaultJobOptions: { 
