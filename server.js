@@ -35,6 +35,7 @@ const port = process.env.PORT || 3000;
 
 /* Database information */
 const uri = process.env.MONGODB_URI;
+//const uri = process.env.MONGODB_URI || fs.readFileSync(__dirname + "/uri.txt", "utf-8", (err) => console.log(err));
 mongoose.connect(uri, {useUnifiedTopology: true, useNewUrlParser: true});
 const connection = mongoose.connection;
 
